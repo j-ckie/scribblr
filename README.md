@@ -1,4 +1,4 @@
-# Individual Project
+# Individual Project - scribblr
 ```JS
 const contributor = {
     name: "Jaclyn Legacion"
