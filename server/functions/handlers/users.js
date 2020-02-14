@@ -12,6 +12,7 @@ const {
     reduceUserDetails
 } = require("../util/validators");
 
+// ======= user signup =======
 exports.signup = (req, res) => {
     let newUser = {
         email: req.body.email,
@@ -65,6 +66,7 @@ exports.signup = (req, res) => {
         });
 }
 
+// =======  user login ======= 
 exports.login = (req, res) => {
     let user = {
         email: req.body.email,
@@ -88,3 +90,50 @@ exports.login = (req, res) => {
         });
 };
 
+// ======= add user profile details ======= 
+exports.addUserDetails = (req, res) => {
+    let userDetails = reduceUserDetails(req.body);
+
+    db.doc(`/users/${req.user.handle}`).update(userDetails)
+        .then(() => {
+            return res.json({ message: "Details successfully added!" });
+        }).catch(err => {
+            console.error(err);
+            return res.status(500).json({ error: err.code });
+        });
+};
+
+// ======= get a user's details ======= 
+exports.getUserDetails = (req, res) => {
+    let userData = {};
+    db.doc(`/users/${req.params.handle}`).get()
+        .then(doc => {
+            if (doc.exists) {
+                userData.user = doc.data();
+                return db.collection("scribbles")
+                    .where("userHandle", "==", req.params.handle)
+                    .orderBy("createdAt", "desc")
+                    .get();
+            } else {
+                return res.status(404).json({ error: "User not found!" });
+            }
+        })
+        .then(data => {
+            userData.scribbles = [];
+            data.forEach(doc => {
+                userData.scribbles.push({
+                    body: doc.data().body,
+                    createdAt: doc.data().createdAt,
+                    userHandle: doc.data().userHandle,
+                    userImage: doc.data().userImage,
+                    likeCount: doc.data().likeCount,
+                    commentCount: doc.data().commentCount,
+                    scribbleId: doc.id
+                });
+            });
+            return res.json(userData);
+        }).catch(err => {
+            console.error(err);
+            return res.status(500).json({ error: err.code });
+        });
+};

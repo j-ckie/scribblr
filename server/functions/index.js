@@ -36,11 +36,11 @@ const {
 // user handlers
 const {
     signup,
-    login
+    login,
     // uploadPfp,
     // addUserDetails,
     // getAuthUser,
-    // GetUserDetails,
+    getUserDetails
     // markNotificationsRead
 } = require("./handlers/users")
 
@@ -59,7 +59,7 @@ app.post("/login", login);
 // app.get("/user", fbAuth, getAuthUser);
 // app.post("/user/image", fbAuth, uploadPfp);
 // app.post("/user", fbAuth, addUserDetails);
-// app.get("/user/:handle", getUserDetails);
+app.get("/user/:handle", getUserDetails);
 // app.post("/notifications", fbAuth, markNotificationsRead);
 
 
