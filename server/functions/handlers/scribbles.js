@@ -88,17 +88,44 @@ exports.commentOnScribble = (req, res) => {
     db.doc(`/scribbles/${req.params.scribbleId}`).get()
         .then(doc => {
             if (!doc.exists) {
-                return res.status(404).json({ error: "Scribble not found" });
+                return res.status(404).json({ error: "Scribble not found!" })
             }
-
             return doc.ref.update({ commentCount: doc.data().commentCount + 1 });
+        })
+        .then(() => {
+            return db.collection("comments").add(newComment);
         })
         .then(() => {
             res.json(newComment);
         }).catch(err => {
             console.error(err);
-            return res.status(500).json({ error: "Something" });
+            return res.status(500).json({ error: err.code });
         });
 };
 
 // ======= like a scribble =======
+exports.likeScribble = (req, res) => {
+    let likeDoc = db.collection("likes")
+        .where("userHandle", "==", req.user.handle)
+        .where("scribbleId", "==", req.params.scribbleId)
+        .limit(1);
+
+    let scribbleDoc = db.doc(`/scribbles/${req.params.scribbleId}`);
+
+    let scribbleData = {};
+
+    scribbleDoc.get()
+        .then(doc => {
+            if (doc.exists) {
+                scribbleData.scribbleId = doc.id;
+                return likeDoc.get();
+            } else {
+                return res.status(404).json({ error: "Scribble not found!" });
+            }
+        })
+        .then(data => {
+            if (data.empty) {
+                return db.collection("likes")
+            }
+        })
+}
