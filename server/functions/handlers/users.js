@@ -64,3 +64,27 @@ exports.signup = (req, res) => {
             }
         });
 }
+
+exports.login = (req, res) => {
+    let user = {
+        email: req.body.email,
+        password: req.body.password
+    }
+
+    const { valid, errors } = validateLoginData(user);
+    if (!valid) return res.status(400).json(errors); // if invalid, stop
+
+    firebase.auth()
+        .signInWithEmailAndPassword(user.email, user.password)
+        .then(data => {
+            return data.user.getIdToken();
+        })
+        .then(token => {
+            return res.json({ token });
+        })
+        .catch(err => {
+            console.error(err);
+            return res.status(403).json({ general: "Wrong credentials, please try again" });
+        });
+};
+

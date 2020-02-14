@@ -35,8 +35,8 @@ const {
 
 // user handlers
 const {
-    signup
-    // login,
+    signup,
+    login
     // uploadPfp,
     // addUserDetails,
     // getAuthUser,
@@ -55,7 +55,7 @@ app.post("/scribble", fbAuth, postOneScribble);
 
 // user routes
 app.post("/signup", signup);
-// app.post("/login", login);
+app.post("/login", login);
 // app.get("/user", fbAuth, getAuthUser);
 // app.post("/user/image", fbAuth, uploadPfp);
 // app.post("/user", fbAuth, addUserDetails);
