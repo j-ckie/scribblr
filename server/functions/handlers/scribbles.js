@@ -1,6 +1,6 @@
 const { db } = require("../util/admin");
 
-// view all scribbles
+// ======= view all scribbles =======
 exports.viewAllScribbles = (req, res) => {
     db.collection("scribbles").get()
         .then(data => {
@@ -19,7 +19,7 @@ exports.viewAllScribbles = (req, res) => {
         }).catch(err => console.error(err));
 }
 
-// post one scribble
+// ======= post one scribble =======
 exports.postOneScribble = (req, res) => {
     if (req.method !== "POST") {
         return res.status(400).json({ error: "Method not allowed!" })
@@ -43,4 +43,32 @@ exports.postOneScribble = (req, res) => {
         }).catch(err => console.error(err));
 };
 
+// ======= get one specific scribble =======
+exports.getScribble = (req, res) => {
+    let scribbleData = {};
 
+    db.doc(`/scribbles/${req.params.scribbleId}`).get()
+        .then(doc => {
+            if (!doc.exists) {
+                return res.status(404).json({ error: "Scribble not found!" });
+            }
+
+            scribbleData = doc.data();
+            scribbleData.scribbleId = doc.id;
+
+            return db.collection("comments")
+                .orderBy("createdAt", "desc")
+                .where("scribbleId", "==", req.params.scribbleId)
+                .get();
+        })
+        .then(data => {
+            scribbleData.comments = [];
+            data.forEach(doc => {
+                scribbleData.comments.push(doc.data());
+            });
+            return res.json(scribbleData);
+        }).catch(err => {
+            console.error(err);
+            return res.status(500).json({ error: err.code });
+        });
+};

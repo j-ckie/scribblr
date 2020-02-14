@@ -25,8 +25,8 @@ const {
 // scribble handlers
 const {
     viewAllScribbles,
-    postOneScribble
-    // getScribble,
+    postOneScribble,
+    getScribble
     // commentOnScribble,
     // likeScribble,
     // unlikeScribble,
@@ -37,17 +37,17 @@ const {
 const {
     signup,
     login,
+    getUserDetails,
     // uploadPfp,
     // addUserDetails,
     // getAuthUser,
-    getUserDetails
     // markNotificationsRead
 } = require("./handlers/users")
 
 // scribble routes
 app.get("/scribbles", viewAllScribbles);
 app.post("/scribble", fbAuth, postOneScribble);
-// app.get("/scribble/:scribbleId", getScribble);
+app.get("/scribble/:scribbleId", getScribble);
 // app.delete("/scribble/:ScribbleId", fbAuth, deleteScribble);
 // app.get("/scribble/:scribbleId/like", fbAuth, likeScribble);
 // app.post("/scribble/:scribbleId/unlike", fbAuth, unlikeScribble);
@@ -56,10 +56,10 @@ app.post("/scribble", fbAuth, postOneScribble);
 // user routes
 app.post("/signup", signup);
 app.post("/login", login);
+app.get("/user/:handle", getUserDetails);
 // app.get("/user", fbAuth, getAuthUser);
 // app.post("/user/image", fbAuth, uploadPfp);
 // app.post("/user", fbAuth, addUserDetails);
-app.get("/user/:handle", getUserDetails);
 // app.post("/notifications", fbAuth, markNotificationsRead);
 
 
