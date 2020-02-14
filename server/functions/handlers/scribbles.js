@@ -105,27 +105,48 @@ exports.commentOnScribble = (req, res) => {
 
 // ======= like a scribble =======
 exports.likeScribble = (req, res) => {
-    let likeDoc = db.collection("likes")
+    let likeDocument = db
+        .collection("likes")
         .where("userHandle", "==", req.user.handle)
         .where("scribbleId", "==", req.params.scribbleId)
         .limit(1);
 
-    let scribbleDoc = db.doc(`/scribbles/${req.params.scribbleId}`);
+    let scribbleDocument = db.doc(`/scribbles/${req.params.scribbleId}`);
 
     let scribbleData = {};
 
-    scribbleDoc.get()
+    scribbleDocument.get()
         .then(doc => {
             if (doc.exists) {
+                scribbleData = doc.data();
                 scribbleData.scribbleId = doc.id;
-                return likeDoc.get();
+                return likeDocument.get();
             } else {
                 return res.status(404).json({ error: "Scribble not found!" });
             }
         })
         .then(data => {
             if (data.empty) {
-                return db.collection("likes")
+                return db
+                    .collection("likes")
+                    .add({
+                        scribbleId: req.params.scribbleId,
+                        userHandle: req.user.handle
+                    })
+                    .then(() => {
+                        let plusLike = scribbleData.likeCount + 1;
+                        return scribbleDocument.update({
+                            likeCount: plusLike
+                        });
+                    })
+                    .then(() => {
+                        return res.json(scribbleData);
+                    });
+            } else {
+                return res.status(400).json({ error: "Scribble already liked!" });
             }
-        })
-}
+        }).catch(err => {
+            console.error(err)
+            return res.status(500).json({ error: err.code });
+        });
+};

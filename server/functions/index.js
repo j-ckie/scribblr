@@ -27,8 +27,8 @@ const {
     viewAllScribbles,
     postOneScribble,
     getScribble,
-    commentOnScribble
-    // likeScribble
+    commentOnScribble,
+    likeScribble
     // unlikeScribble,
     // deleteScribble
 } = require("./handlers/scribbles")
@@ -49,7 +49,7 @@ app.get("/scribbles", viewAllScribbles);
 app.post("/scribble", fbAuth, postOneScribble);
 app.get("/scribble/:scribbleId", getScribble);
 // app.delete("/scribble/:ScribbleId", fbAuth, deleteScribble);
-// app.get("/scribble/:scribbleId/like", fbAuth, likeScribble);
+app.get("/scribble/:scribbleId/like", fbAuth, likeScribble);
 // app.post("/scribble/:scribbleId/unlike", fbAuth, unlikeScribble);
 app.post("/scribble/:scribbleId/comment", fbAuth, commentOnScribble);
 
