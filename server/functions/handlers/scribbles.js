@@ -72,3 +72,33 @@ exports.getScribble = (req, res) => {
             return res.status(500).json({ error: err.code });
         });
 };
+
+// ======= add comment to scribble =======
+exports.commentOnScribble = (req, res) => {
+    if (req.body.body.trim() === "") return res.status(400).json({ comment: "Must not be empty" });
+
+    let newComment = {
+        body: req.body.body,
+        createdAt: new Date().toISOString(),
+        scribbleId: req.params.scribbleId,
+        userHandle: req.user.handle,
+        userImage: req.user.imageUrl
+    };
+
+    db.doc(`/scribbles/${req.params.scribbleId}`).get()
+        .then(doc => {
+            if (!doc.exists) {
+                return res.status(404).json({ error: "Scribble not found" });
+            }
+
+            return doc.ref.update({ commentCount: doc.data().commentCount + 1 });
+        })
+        .then(() => {
+            res.json(newComment);
+        }).catch(err => {
+            console.error(err);
+            return res.status(500).json({ error: "Something" });
+        });
+};
+
+// ======= like a scribble =======
