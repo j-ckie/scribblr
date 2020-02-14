@@ -150,3 +150,49 @@ exports.likeScribble = (req, res) => {
             return res.status(500).json({ error: err.code });
         });
 };
+
+// ======= unlike scribble =======
+exports.unlikeScribble = (req, res) => {
+    let likeDocument = db.collection("likes")
+        .where("userHandle", "==", req.user.handle)
+        .where("scribbleId", "==", req.params.scribbleId)
+        .limit(1);
+
+    let scribbleDocument = db.doc(`/scribbles/${req.params.scribbleId}`);
+
+    let scribbleData = {};
+
+    scribbleDocument.get()
+        .then(doc => {
+            if (doc.exists) {
+                scribbleData = doc.data();
+                scribbleData.scribbleId = doc.id;
+                return likeDocument.get();
+            } else {
+                return res.status(404).json({ error: "Scribble not found!" });
+            }
+        })
+        .then(data => {
+            if (data.empty) {
+                return res.status(400).json({ error: "Scribble not liked!" });
+            } else {
+                return db.doc(`/likes/${data.docs[0].id}`)
+                    .delete()
+                    .then(() => {
+                        scribbleData.likeCount--;
+                        return scribbleDocument.update({
+                            likeCount: scribbleData.likeCount
+                        });
+                    })
+                    .then(() => {
+                        res.json({ scribbleData });
+                    }).catch(err => {
+                        console.error(err);
+                        return res.status(500).json({ error: err.code });
+                    });
+            }
+        }).catch(err => {
+            console.error(err);
+            return res.status(500).json({ error: err.code });
+        });
+};

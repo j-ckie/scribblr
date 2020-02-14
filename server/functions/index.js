@@ -28,8 +28,8 @@ const {
     postOneScribble,
     getScribble,
     commentOnScribble,
-    likeScribble
-    // unlikeScribble,
+    likeScribble,
+    unlikeScribble
     // deleteScribble
 } = require("./handlers/scribbles")
 
@@ -37,7 +37,7 @@ const {
 const {
     signup,
     login,
-    getUserDetails,
+    getUserDetails
     // uploadPfp,
     // addUserDetails,
     // getAuthUser,
@@ -50,7 +50,7 @@ app.post("/scribble", fbAuth, postOneScribble);
 app.get("/scribble/:scribbleId", getScribble);
 // app.delete("/scribble/:ScribbleId", fbAuth, deleteScribble);
 app.get("/scribble/:scribbleId/like", fbAuth, likeScribble);
-// app.post("/scribble/:scribbleId/unlike", fbAuth, unlikeScribble);
+app.post("/scribble/:scribbleId/unlike", fbAuth, unlikeScribble);
 app.post("/scribble/:scribbleId/comment", fbAuth, commentOnScribble);
 
 // user routes
