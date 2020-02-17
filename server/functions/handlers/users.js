@@ -61,7 +61,7 @@ exports.signup = (req, res) => {
             if (err.code === "auth/email-already-in-use") {
                 return res.status(400).json({ email: "Email is already in use" });
             } else {
-                return res.status(400).json({ general: "Something went wrong, please try again" });
+                return res.status(500).json({ general: "Something went wrong, please try again" });
             }
         });
 }
@@ -103,19 +103,21 @@ exports.addUserDetails = (req, res) => {
         });
 };
 
-// ======= get a user's details ======= 
+// ======= get any user's details ======= 
 exports.getUserDetails = (req, res) => {
     let userData = {};
-    db.doc(`/users/${req.params.handle}`).get()
+    db.doc(`/users/${req.params.handle}`)
+        .get()
         .then(doc => {
             if (doc.exists) {
                 userData.user = doc.data();
-                return db.collection("scribbles")
+                return db
+                    .collection("scribbles")
                     .where("userHandle", "==", req.params.handle)
                     .orderBy("createdAt", "desc")
                     .get();
             } else {
-                return res.status(404).json({ error: "User not found!" });
+                return res.status(404).json({ error: "User not found" });
             }
         })
         .then(data => {
@@ -132,7 +134,8 @@ exports.getUserDetails = (req, res) => {
                 });
             });
             return res.json(userData);
-        }).catch(err => {
+        })
+        .catch(err => {
             console.error(err);
             return res.status(500).json({ error: err.code });
         });
@@ -202,9 +205,10 @@ exports.uploadPfp = (req, res) => {
 
         const imgExtension = filename.split(".")[filename.split(".").length - 1];
 
+        let random = parseInt(Math.random() * 100)
         let timeStamp = Math.floor(Date.now());
 
-        imageFileName = `${timeStamp}.${imgExtension}`; // rename image file the timestamp to avoid using duplicate naming convention
+        imageFileName = `${random}${timeStamp}.${imgExtension}`; // rename image file the timestamp to avoid using duplicate naming convention
 
         const filepath = path.join(os.tmpdir(), imageFileName);
 
@@ -237,3 +241,20 @@ exports.uploadPfp = (req, res) => {
     });
     busboy.end(req.rawBody);
 };
+
+// ======= mark notifications read =======
+exports.markNotificationsRead = (req, res) => {
+    let batch = db.batch();
+    req.body.forEach(notificationId => {
+        const notification = db.doc(`/notifications/${notificationId}`);
+        batch.update(notification, { read: true });
+    });
+    batch.commit()
+        .then(() => {
+            res.json({ message: "Notifications marked read" });
+        }).catch(err => {
+            console.error(err);
+            return res.status(500).json({ error: err.code })
+        })
+
+}
