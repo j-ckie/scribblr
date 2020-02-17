@@ -197,6 +197,21 @@ exports.unlikeScribble = (req, res) => {
         });
 };
 
+// ======= update scribble =======
+exports.updateScribble = (req, res) => {
+    let scribble = req.body;
+    const document = db.doc(`/scribbles/${req.params.scribbleId}`);
+    document
+        .update(scribble)
+        .then(() => {
+            return res.json({ message: "Scribble successfully updated!" });
+        })
+        .catch(err => {
+            console.error(err);
+            return res.status(500).json({ error: err.code });
+        });
+};
+
 // ======= delete scribble =======
 exports.deleteScribble = (req, res) => {
     const document = db.doc(`/scribbles/${req.params.scribbleId}`);
@@ -214,6 +229,30 @@ exports.deleteScribble = (req, res) => {
         })
         .then(() => {
             res.json({ message: "Scribble successfully deleted" });
+        })
+        .catch(err => {
+            console.error(err);
+            return res.status(500).json({ error: err.code });
+        });
+};
+
+// ======= delete comment =======
+exports.deleteComment = (req, res) => {
+    const document = db.doc(`/comments/${req.params.commentId}`);
+    document
+        .get()
+        .then(doc => {
+            if (!doc.exists) {
+                return res.status(404).json({ error: "Comment not found" });
+            }
+            if (doc.data().userHandle !== req.user.handle) {
+                return res.status(403).json({ error: "Unauthorized" });
+            } else {
+                return document.delete()
+            }
+        })
+        .then(() => {
+            res.json({ message: "Comment successfully deleted" });
         })
         .catch(err => {
             console.error(err);

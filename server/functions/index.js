@@ -30,7 +30,9 @@ const {
     commentOnScribble,
     likeScribble,
     unlikeScribble,
-    deleteScribble
+    deleteScribble,
+    updateScribble,
+    deleteComment
 } = require("./handlers/scribbles")
 
 // user handlers
@@ -52,6 +54,8 @@ app.get("/scribble/:scribbleId/like", fbAuth, likeScribble);
 app.get("/scribble/:scribbleId/unlike", fbAuth, unlikeScribble);
 app.post("/scribble/:scribbleId/comment", fbAuth, commentOnScribble);
 app.delete("/scribble/:scribbleId", fbAuth, deleteScribble);
+app.post("/scribble/:scribbleId/update", fbAuth, updateScribble);
+app.delete("/scribble/:scribbleId/comment/:commentId", fbAuth, deleteComment)
 
 // user routes
 app.post("/signup", signup);
@@ -121,6 +125,18 @@ exports.createNotificationOnComment = functions
                 return;
             })
     });
+
+exports.deleteNotificationOnCommentDelete = functions
+    .region("us-central1")
+    .firestore.document("comments/{id}")
+    .onDelete(snapshot => {
+        return db.doc(`/notifications/${snapshot.id}`)
+            .delete()
+            .catch(err => {
+                console.error(err);
+                return;
+            })
+    })
 
 // if user changes pfp - change all pics on scribbles
 exports.onUserImgChange = functions
