@@ -15,6 +15,11 @@ module.exports = (req, res, next) => {
 
     admin.auth().verifyIdToken(idToken)
         .then(decodedToken => {
+            // if (errorInfo.code === "auth/argument-error") {
+            //     console.error("Your token has expired! Please login and try again.");
+            //     return res.status(403).json({ error: "Your session has expired! Please login and try again." })
+            // }
+
             req.user = decodedToken;
             return db.collection("users")
                 .where("userId", "==", req.user.uid)
