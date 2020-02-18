@@ -1,26 +1,57 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import './App.css';
 
+// ======= Material UI =======
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+
+// ======= Components =======
+import Navbar from "./components/Navbar";
+
+// ======= pages =======
+import home from "./pages/home";
+import login from "./pages/login";
+import signup from "./pages/signup";
+
+
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            light: "#33c9dc",
+            main: "#00bcd4",
+            dark: "#008394",
+            contrastText: "#fff"
+        },
+        secondary: {
+            light: "#ff6333",
+            main: "#ff3d00",
+            dark: "#b22a00",
+            contrastText: "#fff"
+        }
+    },
+    typography: {
+        useNextVariants: true
+    }
+});
+
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <MuiThemeProvider theme={theme}>
+            <div className="App">
+                <BrowserRouter>
+                    <Navbar />
+                    <div className="container">
+                        <Switch>
+                            <Route exact path="/" component={home} />
+                            <Route exact path="/login" component={login} />
+                            <Route exact path="/signup" component={signup} />
+                        </Switch>
+                    </div>
+                </BrowserRouter>
+            </div>
+        </MuiThemeProvider>
+    );
 }
 
 export default App;
