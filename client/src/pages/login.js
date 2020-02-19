@@ -40,10 +40,7 @@ const styles = {
     progress: {
         position: "absolute"
     }
-
 }
-
-
 
 class login extends Component {
     constructor() {
@@ -67,7 +64,8 @@ class login extends Component {
         }
         axios.post("/login", userData)
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data);
+                localStorage.setItem("fireBaseIDToken", `Bearer ${res.data.token}`)
                 this.setState({
                     loading: false
                 });
@@ -114,13 +112,13 @@ class login extends Component {
                             name="password"
                             type="password"
                             label="Password"
-                            lassName={classes.textField}
+                            className={classes.textField}
                             helperText={errors.password}
                             error={errors.password ? true : false}
                             value={this.state.password}
                             onChange={this.handleChange}
                             fullWidth />
-                        {errors.general && (
+                        {errors.general && ( // if there are errors, show the message
                             <Typography variant="body2" className={classes.customError}>
                                 {errors.general}
                             </Typography>
@@ -132,7 +130,7 @@ class login extends Component {
                             className={classes.button}
                             disabled={loading}>
                             Submit
-                                {loading && (
+                                {loading && ( // on submit, disable the button and show loading circle
                                 <CircularProgress size={20} className={classes.progress} />
                             )}
                         </Button>
