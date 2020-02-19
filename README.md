@@ -5,4 +5,4 @@ const contributor = {
 }
 ```
 
-Description: Twitter clone created with React, Redux, Firebase, Cloud Firestore, Busboy, Material UI, CSS and Express.
+Description: Twitter clone created with React, Redux, Firebase, Cloud Firestore, Busboy, DayJS, Material UI, CSS and Express.

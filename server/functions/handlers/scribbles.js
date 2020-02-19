@@ -2,7 +2,9 @@ const { db } = require("../util/admin");
 
 // ======= view all scribbles =======
 exports.viewAllScribbles = (req, res) => {
-    db.collection("scribbles").get()
+    db.collection("scribbles")
+        .orderBy("createdAt", "desc")
+        .get()
         .then(data => {
             let scribbles = [];
 
@@ -14,7 +16,6 @@ exports.viewAllScribbles = (req, res) => {
                     createdAt: doc.data().createdAt,
                     userImage: doc.data().userImage
                 });
-                console.log(doc)
             });
             return res.json(scribbles)
         }).catch(err => console.error(err));
@@ -30,7 +31,7 @@ exports.postOneScribble = (req, res) => {
         body: req.body.body,
         userHandle: req.body.userHandle,
         userImage: req.user.imageUrl,
-        createdAt: new Date().toISOString(),
+        createdAt: new Date().toISOString,
         likeCount: 0,
         commentCount: 0,
     };
