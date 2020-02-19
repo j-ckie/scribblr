@@ -103,10 +103,12 @@ class signup extends Component {
                         </Typography>
                     <form noValidate onSubmit={this.handleSubmit}>
                         <TextField
+                            required
                             id="handle"
                             name="handle"
                             type="text"
                             label="Handle"
+                            variant="outlined"
                             className={classes.textField}
                             helperText={errors.handle}
                             error={errors.handle ? true : false}
@@ -114,9 +116,12 @@ class signup extends Component {
                             onChange={this.handleChange}
                             fullWidth />
                         <TextField
+                            required
                             id="email"
                             name="email"
-                            type="email" label="Email"
+                            type="email"
+                            label="Email"
+                            variant="outlined"
                             className={classes.textField}
                             helperText={errors.email}
                             error={errors.email ? true : false}
@@ -124,10 +129,12 @@ class signup extends Component {
                             onChange={this.handleChange}
                             fullWidth />
                         <TextField
+                            required
                             id="password"
                             name="password"
                             type="password"
                             label="Password"
+                            variant="outlined"
                             className={classes.textField}
                             helperText={errors.password}
                             error={errors.password ? true : false}
@@ -135,10 +142,12 @@ class signup extends Component {
                             onChange={this.handleChange}
                             fullWidth />
                         <TextField
+                            required
                             id="confirmPassword"
                             name="confirmPassword"
                             type="password"
                             label="Confirm password"
+                            variant="outlined"
                             className={classes.textField}
                             helperText={errors.confirmPassword}
                             error={errors.confirmPassword ? true : false}
