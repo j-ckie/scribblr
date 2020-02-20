@@ -71,6 +71,7 @@ export class EditDetails extends Component {
     }
 
     render() {
+        console.log("Testing edit profile")
         const { classes } = this.props;
         return (
             <Fragment>
