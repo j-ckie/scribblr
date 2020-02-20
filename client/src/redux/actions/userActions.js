@@ -12,11 +12,13 @@ export const loginUser = (userData) => (dispatch, history) => {
             dispatch({ type: CLEAR_ERRORS });
             history.push("/");
         })
-        .catch(err => {
-            console.log(err)
+        .catch(error => {
+            console.log("Looking for errors...")
+            console.log(error);
+            console.log(error.response);
             dispatch({
                 type: SET_ERRORS,
-                payload: err.data
+                payload: error.response.data
             })
 
         })

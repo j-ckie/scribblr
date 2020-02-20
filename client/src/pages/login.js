@@ -31,11 +31,11 @@ class login extends Component {
     }
 
     // figure out how to get error messages to pop up next to fields using the code below. Ask azam
-    // componentWillReceiveProps(nextProps) {
-    //     if (nextProps.UI.errors) {
-    //         this.setState({ errors: nextProps.UI.errors });
-    //     }
-    // }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.UI.errors) {
+            this.setState({ errors: nextProps.UI.errors });
+        }
+    }
 
     handleSubmit = (event) => {
         event.preventDefault();
@@ -69,7 +69,7 @@ class login extends Component {
                             name="email"
                             type="email" label="Email"
                             className={classes.textField}
-                            helperText={errors.email}
+                            helperText={errors == null ? "" : errors.email}
                             error={errors.email ? true : false}
                             value={this.state.email}
                             onChange={this.handleChange}

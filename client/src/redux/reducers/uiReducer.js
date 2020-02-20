@@ -11,7 +11,8 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                errors: action.payload
+                errors: action.payload,
+                foo: 10
             }
         case CLEAR_ERRORS:
             return {
