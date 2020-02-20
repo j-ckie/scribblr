@@ -4,6 +4,12 @@ import './App.css';
 import themeFile from "./util/theme";
 import jwtDecode from "jwt-decode";
 
+// ======= Redux =======
+import { Provider } from "react-redux";
+import store from "./redux/store";
+import { SET_AUTHENTICATED } from "./redux/types";
+import { logoutUser, getUserData } from "./redux/actions/userActions";
+
 // ======= Material UI =======
 import { ThemeProvider } from '@material-ui/core/styles';
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
@@ -16,40 +22,45 @@ import AuthRoute from "./util/AuthRoute"
 import home from "./pages/home";
 import login from "./pages/login";
 import signup from "./pages/signup";
+import axios from 'axios';
 
 // ======= use theme file =======
 const theme = createMuiTheme(themeFile);
 
 // ======= validate token =======
-let authenticated;
+
 const token = localStorage.fireBaseIDToken;
 if (token) {
     const decodedToken = jwtDecode(token);
     // console.log(decodedToken);
     if (decodedToken.exp * 1000 < Date.now()) {
+        store.dispatch(logoutUser())
         window.location.href = "/login";
-        authenticated = false;
     } else {
-        authenticated = true;
+        store.dispatch({ type: SET_AUTHENTICATED });
+        axios.default.headers.common["Authorization"] = token;
+        store.dispatch(getUserData());
     }
 }
 
 function App() {
     return (
-        <ThemeProvider theme={theme}>
-            <div className="App">
+        <Provider store={store}>
+            <ThemeProvider theme={theme}>
+
                 <BrowserRouter>
                     <Navbar />
                     <div className="container">
                         <Switch>
                             <Route exact path="/" component={home} />
-                            <AuthRoute exact path="/login" component={login} authenticated={authenticated} />
-                            <AuthRoute exact path="/signup" component={signup} authenticated={authenticated} />
+                            <AuthRoute exact path="/login" component={login} />
+                            <AuthRoute exact path="/signup" component={signup} />
                         </Switch>
                     </div>
                 </BrowserRouter>
-            </div>
-        </ThemeProvider>
+
+            </ThemeProvider>
+        </Provider>
     );
 }
 
