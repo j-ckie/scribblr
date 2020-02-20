@@ -36,6 +36,7 @@ const styles = {
 }
 
 class Scribble extends Component {
+
     likedScribble = () => {
         if (this.props.user.likes && this.props.user.likes.find(like => like.scribbleId === this.props.scribble.scribbleId)) {
             return true;
@@ -45,6 +46,7 @@ class Scribble extends Component {
     likeScribble = () => {
         this.props.likeScribble(this.props.scribble.scribbleId);
     }
+
     unlikeScribble = () => {
         this.props.unlikeScribble(this.props.scribble.scribbleId);
     }
@@ -66,6 +68,7 @@ class Scribble extends Component {
                 authenticated
             }
         } = this.props // destructuring
+
         const likeButton = !authenticated ? (
             <MyButton tip="Like">
                 <Link to="/login">
