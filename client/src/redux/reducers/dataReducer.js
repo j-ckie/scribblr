@@ -20,14 +20,14 @@ export default function (state = initialState, action) {
                 loading: false
             };
         case LIKE_SCRIBBLE:
-        case UNLIKE_SCRIBBLE:
+            // case UNLIKE_SCRIBBLE:
             let index = state.scribbles.findIndex((scribble) => scribble.scribbleId === action.payload.scribbleId);
 
             state.scribbles[index] = action.payload;
 
             return {
                 ...state,
-                scribbles: action.payload, // delete this if it doesn/t work
+                scribble: action.payload, // delete this if it doesn/t work
                 loading: false //same here
             }
         case DELETE_SCRIBBLE:

@@ -115,7 +115,7 @@ class Scribble extends Component {
 
 Scribble.propTypes = {
     likeScribble: PropTypes.func.isRequired,
-    unlikeScribble: PropTypes.func.isRequired,
+    // unlikeScribble: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
     scribble: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired

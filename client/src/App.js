@@ -43,6 +43,8 @@ if (token) {
     }
 }
 
+console.log(React.version);
+
 function App() {
     return (
         <Provider store={store}>
