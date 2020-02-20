@@ -14,7 +14,9 @@ exports.viewAllScribbles = (req, res) => {
                     body: doc.data().body,
                     userHandle: doc.data().userHandle,
                     createdAt: doc.data().createdAt,
-                    userImage: doc.data().userImage
+                    userImage: doc.data().userImage,
+                    likeCount: doc.data().likeCount,
+                    commentCount: doc.data().commentCount
                 });
             });
             return res.json(scribbles)
@@ -31,7 +33,7 @@ exports.postOneScribble = (req, res) => {
         body: req.body.body,
         userHandle: req.body.userHandle,
         userImage: req.user.imageUrl,
-        createdAt: new Date().toISOString,
+        createdAt: new Date().toISOString(),
         likeCount: 0,
         commentCount: 0,
     };
