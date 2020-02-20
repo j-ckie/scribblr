@@ -1,13 +1,18 @@
-import React, { Component } from 'react'
-import axios from "axios";
+import React, { Component } from 'react';
+import PropTypes from "prop-types";
 
 // ======= Material UI =======
-// import withStyles from "@material-ui/core/styles/withStyles";
+
 import Grid from "@material-ui/core/Grid";
 
 // ======= Components =======
 import Scribble from "../components/Scribble"
 import Profile from "../components/Profile"
+
+
+// ======= redux =======
+import { connect } from "react-redux";
+import { getScribbles } from "../redux/actions/dataActions";
 
 // const styles = {
 //     profileContainer: {
@@ -16,26 +21,17 @@ import Profile from "../components/Profile"
 // }
 
 class home extends Component {
-    state = {
-        scribbles: null
-    }
+
 
     componentDidMount() {
-        axios.get("/scribbles")
-            .then(res => {
-                this.setState({
-                    scribbles: res.data
-                })
-                // console.log(res.data)
-            })
-            .catch(err => console.log(err));
+        this.props.getScribbles();
     }
 
     render() {
-        // const { classes } = this.props;
+        const { scribbles, loading } = this.props.data
 
-        let recentScribblesMarkup = this.state.scribbles ? (
-            this.state.scribbles.map(scribble => <Scribble key={scribble.scribbleId} scribble={scribble} />
+        let recentScribblesMarkup = !loading ? (
+            scribbles.map(scribble => <Scribble key={scribble.scribbleId} scribble={scribble} />
             )) : <p>Loading...</p>
 
         return (
@@ -53,4 +49,13 @@ class home extends Component {
 
 // export default withStyles(styles)(home);
 
-export default home;
+home.propTypes = {
+    getScribbles: PropTypes.func.isRequired,
+    data: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+    data: state.data
+})
+
+export default connect(mapStateToProps, { getScribbles })(home)
