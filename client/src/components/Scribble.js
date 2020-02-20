@@ -17,7 +17,8 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 
 // ======= redux =======
 import { connect } from "react-redux";
-import { likeScribble, unlikeScribble } from "../redux/actions/dataActions";
+import { likeScribble } from "../redux/actions/dataActions";
+// import { likeScribble, unlikeScribble } from "../redux/actions/dataActions";
 import MyButton from "../util/MyButton";
 
 const styles = {
@@ -77,7 +78,7 @@ class Scribble extends Component {
             </MyButton>
         ) : (
                 this.likedScribble() ? (
-                    <MyButton tip="Unlike" onClick={this.unlikeScribble}>
+                    <MyButton tip="Liked">
                         <FavoriteIcon color="primary" />
                     </MyButton>
                 ) : (
@@ -124,8 +125,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapActionToProps = {
-    likeScribble,
-    unlikeScribble
+    likeScribble
+    // unlikeScribble
 }
 
 export default connect(mapStateToProps, mapActionToProps)(withStyles(styles)(Scribble))

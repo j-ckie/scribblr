@@ -48,11 +48,11 @@ export const likeScribble = (scribbleId) => (dispatch) => {
     }).catch(err => console.log(err))
 }
 
-export const unlikeScribble = (scribbleId) => (dispatch) => {
-    axios.get(`/scribble/${scribbleId}/unlike`).then(res => {
-        dispatch({ type: UNLIKE_SCRIBBLE, payload: res.data })
+// export const unlikeScribble = (scribbleId) => (dispatch) => {
+//     axios.get(`/scribble/${scribbleId}/unlike`).then(res => {
+//         dispatch({ type: UNLIKE_SCRIBBLE, payload: res.data })
 
 
 
-    }).catch(err => console.log(err))
-} 
+//     }).catch(err => console.log(err))
+// } 
