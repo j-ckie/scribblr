@@ -13,34 +13,36 @@ export default {
             contrastText: "#fff"
         }
     },
-    typography: {
-        useNextVariants: true
-    },
-    form: {
-        textAlign: "center"
-    },
-    image: {
-        width: 100,
-        margin: "20px 0 20px 0"
-    },
-    pageTitle: {
-        margin: "10px 0 10px 0"
-    },
-    textField: {
-        margin: "10px 0 10px 0"
-    },
-    button: {
-        marginTop: 20,
-        position: "relative"
-    },
-    customError: {
-        color: "red",
-        fontSize: "0.8rem"
-    },
-    smallText: {
-        color: "gray"
-    },
-    progress: {
-        position: "absolute"
+    spreadThis: {
+        typography: {
+            useNextVariants: true
+        },
+        form: {
+            textAlign: "center"
+        },
+        image: {
+            width: 100,
+            margin: "20px 0 20px 0"
+        },
+        pageTitle: {
+            margin: "10px 0 10px 0"
+        },
+        textField: {
+            margin: "10px 0 10px 0"
+        },
+        button: {
+            marginTop: 20,
+            position: "relative"
+        },
+        customError: {
+            color: "red",
+            fontSize: "0.8rem"
+        },
+        smallText: {
+            color: "gray"
+        },
+        progress: {
+            position: "absolute"
+        }
     }
 }

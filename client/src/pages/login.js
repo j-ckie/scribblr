@@ -12,35 +12,9 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-const styles = {
-    form: {
-        textAlign: "center"
-    },
-    image: {
-        width: 100,
-        margin: "20px 0 20px 0"
-    },
-    pageTitle: {
-        margin: "10px 0 10px 0"
-    },
-    textField: {
-        margin: "10px 0 10px 0"
-    },
-    button: {
-        marginTop: 20,
-        position: "relative"
-    },
-    customError: {
-        color: "red",
-        fontSize: "0.8rem"
-    },
-    smallText: {
-        color: "gray"
-    },
-    progress: {
-        position: "absolute"
-    }
-}
+const styles = (theme) => ({
+    ...theme.spreadThis
+})
 
 class login extends Component {
     constructor() {
