@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import PropTypes from "prop-types";
+import DeleteScribble from "./DeleteScribble";
 
 // ======= Material UI =======
 import Card from "@material-ui/core/Card";
@@ -22,6 +23,7 @@ import MyButton from "../util/MyButton";
 
 const styles = {
     card: {
+        position: "relative",
         display: "flex",
         marginBottom: 20,
     },
@@ -51,7 +53,7 @@ class Scribble extends Component {
 
     render() {
 
-
+        dayjs.extend(relativeTime);
         const {
             classes,
             scribble: {
@@ -61,11 +63,12 @@ class Scribble extends Component {
                 userHandle,
                 scribbleId,
                 likeCount,
-                commentCount },
+                commentCount, },
             user: {
-                authenticated
+                authenticated, credentials: { handle }
             }
         } = this.props // destructuring
+
         const likeButton = !authenticated ? (
             <MyButton tip="Like">
                 <Link to="/login">
@@ -83,17 +86,16 @@ class Scribble extends Component {
                         </MyButton>
                     )
             )
-        // console.log(this.props.scribble);
-        // console.log("LIkecount:")
-        // console.log(likeCount)
-        // console.log("COmment count")
-        // console.log(commentCount)
-        dayjs.extend(relativeTime);
+
+        const deleteButton = authenticated && userHandle === handle ? (
+            <DeleteScribble scribbleId={scribbleId} />
+        ) : null
         return (
             <Card className={classes.card}>
                 <CardHeader avatar={<Avatar src={userImage} className={classes.large} />} />
                 <CardContent className={classes.content}>
                     <Typography variant="h5" component={Link} to={`/users/${userHandle}`} color="primary">{userHandle}</Typography>
+                    {deleteButton}
                     <Typography variant="body2" color="textSecondary">{dayjs(createdAt).fromNow()}</Typography>
                     <Typography variant="body1">{body}</Typography>
                     {likeButton}
