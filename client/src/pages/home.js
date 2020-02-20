@@ -7,6 +7,7 @@ import Grid from "@material-ui/core/Grid";
 
 // ======= Components =======
 import Scribble from "../components/Scribble"
+import Profile from "../components/Profile"
 
 // const styles = {
 //     profileContainer: {
@@ -40,7 +41,7 @@ class home extends Component {
         return (
             <Grid container spacing={2}>
                 <Grid item sm={4} xs={12}>
-                    <p>Profile Goes Here</p>
+                    <Profile />
                 </Grid>
                 <Grid item sm={8} xs={12}>
                     {recentScribblesMarkup}
