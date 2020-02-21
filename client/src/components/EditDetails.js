@@ -71,11 +71,10 @@ export class EditDetails extends Component {
     }
 
     render() {
-        console.log("testing edit profile");
         const { classes } = this.props;
         return (
             <Fragment>
-                <MyButton tip="Edit profile" onclick={this.handleOpen} btnClassName={classes.button}>
+                <MyButton tip="Edit profile" onClick={this.handleOpen} btnClassName={classes.button}>
                     <EditIcon color="primary" />
                 </MyButton>
                 <Dialog

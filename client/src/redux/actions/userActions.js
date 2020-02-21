@@ -4,19 +4,22 @@ import axios from "axios";
 
 export const loginUser = (userData) => (dispatch, history) => {
     dispatch({ type: LOADING_UI });
-
+    console.log("History:")
+    console.log(history)
     axios.post("/login", userData)
         .then(res => {
             setAuthorizationHeader(res.data.token)
             dispatch(getUserData());
             dispatch({ type: CLEAR_ERRORS });
-            history.push("/");
+            // history.push("/");
         })
-        .catch(err => {
-            console.log(err)
+        .catch(error => {
+            console.log("Looking for errors...")
+            console.log(error);
+            console.log(error.response);
             dispatch({
                 type: SET_ERRORS,
-                payload: err.data
+                payload: error.response.data
             })
 
         })

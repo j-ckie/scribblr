@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import MyButton from "../util/MyButton";
 
@@ -16,11 +16,6 @@ import { connect } from "react-redux";
 import { deleteScribble } from "../redux/actions/dataActions"
 
 const styles = {
-    deleteButton: {
-        position: "absolute",
-        left: "90%",
-        top: "10%"
-    }
 
 }
 

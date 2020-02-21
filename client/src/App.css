@@ -21,3 +21,45 @@ a {
 .nav-container svg {
     color: #fff 
 }
+
+.dialog-container-scribble {
+    display: flex;
+    flex-flow: row-reverse;
+    align-items: flex-start;
+}
+
+.main-scribble-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.scribble-edit-buttons {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+}
+
+.likes-and-comments-container {
+    width:100%;
+    display: flex;
+    font-size: 1rem;
+    padding-top: 12px;
+}
+
+.likes-container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.comments-container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.count {
+    font-size: .8rem;
+    color: #0f0f0f;
+}

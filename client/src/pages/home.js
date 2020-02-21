@@ -14,11 +14,6 @@ import Profile from "../components/Profile"
 import { connect } from "react-redux";
 import { getScribbles } from "../redux/actions/dataActions";
 
-// const styles = {
-//     profileContainer: {
-//         sticky: "top"
-//     }
-// }
 
 class home extends Component {
 
@@ -46,8 +41,6 @@ class home extends Component {
         )
     }
 }
-
-// export default withStyles(styles)(home);
 
 home.propTypes = {
     getScribbles: PropTypes.func.isRequired,

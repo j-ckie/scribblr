@@ -11,8 +11,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-
-// redux
+// ======= Redux =======
 import { connect } from "react-redux";
 import { loginUser } from "../redux/actions/userActions";
 
@@ -44,7 +43,6 @@ class login extends Component {
             password: this.state.password
         }
         this.props.loginUser(userData, this.props.history)
-
     }
 
     handleChange = (event) => {
@@ -70,7 +68,7 @@ class login extends Component {
                             name="email"
                             type="email" label="Email"
                             className={classes.textField}
-                            helperText={errors.email}
+                            helperText={errors == null ? "" : errors.email}
                             error={errors.email ? true : false}
                             value={this.state.email}
                             onChange={this.handleChange}
