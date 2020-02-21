@@ -4,6 +4,8 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import PropTypes from "prop-types";
 import DeleteScribble from "./DeleteScribble";
+import ScribbleDialog from "./ScribbleDialog";
+import LikeButton from "./LikeButton";
 
 // ======= Material UI =======
 import Card from "@material-ui/core/Card";
@@ -13,12 +15,11 @@ import Avatar from "@material-ui/core/Avatar";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Typography from '@material-ui/core/Typography';
 import ChatBubble from "@material-ui/icons/ChatBubble";
-import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
-import FavoriteIcon from '@material-ui/icons/Favorite';
+
 
 // ======= redux =======
 import { connect } from "react-redux";
-import { likeScribble } from "../redux/actions/dataActions";
+
 // import { likeScribble, unlikeScribble } from "../redux/actions/dataActions";
 import MyButton from "../util/MyButton";
 
@@ -40,19 +41,7 @@ const styles = {
 
 class Scribble extends Component {
 
-    likedScribble = () => {
-        if (this.props.user.likes && this.props.user.likes.find(like => like.scribbleId === this.props.scribble.scribbleId)) {
-            return true;
-        } else return false;
-    }
 
-    likeScribble = () => {
-        this.props.likeScribble(this.props.scribble.scribbleId);
-    }
-
-    unlikeScribble = () => {
-        this.props.unlikeScribble(this.props.scribble.scribbleId);
-    }
 
     render() {
 
@@ -72,49 +61,47 @@ class Scribble extends Component {
             }
         } = this.props // destructuring
 
-        const likeButton = !authenticated ? (
-            <MyButton tip="Like">
-                <Link to="/login">
-                    <FavoriteBorder color="primary" />
-                </Link>
-            </MyButton>
-        ) : (
-                this.likedScribble() ? (
-                    <MyButton tip="Liked">
-                        <FavoriteIcon color="primary" />
-                    </MyButton>
-                ) : (
-                        <MyButton tip="Like" onClick={this.likeScribble}>
-                            <FavoriteBorder color="primary" />
-                        </MyButton>
-                    )
-            )
+
 
         const deleteButton = authenticated && userHandle === handle ? (
-            <DeleteScribble scribbleId={scribbleId} />
+            <DeleteScribble scribbleId={scribbleId} className="delete-scribble-btn" />
         ) : null
         return (
             <Card className={classes.card}>
+
                 <CardHeader avatar={<Avatar src={userImage} className={classes.large} />} />
-                <CardContent className={classes.content}>
-                    <Typography variant="h5" component={Link} to={`/users/${userHandle}`} color="primary">{userHandle}</Typography>
-                    {deleteButton}
-                    <Typography variant="body2" color="textSecondary">{dayjs(createdAt).fromNow()}</Typography>
-                    <Typography variant="body1">{body}</Typography>
-                    {likeButton}
-                    <span>{likeCount} Likes</span>
-                    <MyButton tip="comments">
-                        <ChatBubble color="primary" />
-                    </MyButton>
-                    <span>{commentCount} Comments</span>
-                </CardContent>
+                <div className="main-scribble-content">
+                    <CardContent className={classes.content}>
+                        <Typography variant="h5" component={Link} to={`/users/${userHandle}`} color="primary">{userHandle}</Typography>
+
+                        <Typography variant="body2" color="textSecondary">{dayjs(createdAt).fromNow()}</Typography>
+                        <Typography variant="body1">{body}</Typography>
+                        <div className="likes-and-comments-container">
+                            <div className="likes-container">
+                                <span className="count">{likeCount}</span>
+                                <LikeButton scribbleId={scribbleId} />
+                            </div>
+                            <div className="comments-container">
+                                <span className="count">{commentCount}</span>
+                                <MyButton className={classes.commentIcon} tip="comments">
+                                    <ChatBubble color="primary" />
+                                </MyButton>
+
+                            </div>
+                        </div>
+                    </CardContent>
+                    <div className="scribble-edit-buttons">
+                        <ScribbleDialog scribbleId={scribbleId} userHandle={userHandle} />
+                        {deleteButton}
+                    </div>
+                </div>
             </Card >
         )
     }
 }
 
 Scribble.propTypes = {
-    likeScribble: PropTypes.func.isRequired,
+    // likeScribble: PropTypes.func.isRequired,
     // unlikeScribble: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
     scribble: PropTypes.object.isRequired,
@@ -125,9 +112,9 @@ const mapStateToProps = (state) => ({
     user: state.user
 })
 
-const mapActionToProps = {
-    likeScribble
-    // unlikeScribble
-}
+// const mapActionToProps = {
+//     likeScribble
+//     // unlikeScribble
+// }
 
-export default connect(mapStateToProps, mapActionToProps)(withStyles(styles)(Scribble))
+export default connect(mapStateToProps)(withStyles(styles)(Scribble))

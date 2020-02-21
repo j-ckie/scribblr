@@ -9,7 +9,6 @@ import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import EditIcon from "@material-ui/icons/Edit";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
@@ -22,6 +21,7 @@ const styles = (theme) => ({
     ...theme.spreadThis,
     submitButton: {
         position: "relative",
+        float: "right",
         marginTop: 15,
         marginBottom: 15
     },
@@ -92,7 +92,6 @@ class PostScribble extends Component {
                     open={this.state.open}
                     onClose={this.handleClose}
                     fullWidth maxWidth="sm">
-
                     <DialogTitle>
                         Post a new scribble
                         <MyButton tip="Close"
@@ -110,8 +109,8 @@ class PostScribble extends Component {
                                 multiline
                                 rows="3"
                                 placeholder="..."
-                                errors={errors.body}
-                                helperText={errors.body}
+                                // errors={errors.body}
+                                // helperText={errors.body}
                                 className={classes.textField}
                                 value={this.state.scribble}
                                 onChange={this.handleChange}

@@ -1,5 +1,5 @@
 // import { SET_SCRIBBLES, LOADING_DATA, LIKE_SCRIBBLE, UNLIKE_SCRIBBLE, DELETE_SCRIBBLE } from "../types";
-import { SET_SCRIBBLES, LOADING_DATA, LIKE_SCRIBBLE, DELETE_SCRIBBLE, LOADING_UI, SET_ERRORS, CLEAR_ERRORS, POST_SCRIBBLE, SET_USER } from "../types";
+import { SET_SCRIBBLES, LOADING_DATA, LIKE_SCRIBBLE, DELETE_SCRIBBLE, LOADING_UI, CLEAR_ERRORS, POST_SCRIBBLE, SET_SCRIBBLE, STOP_LOADING_UI } from "../types"; //SET_ERRORS
 import axios from "axios";
 
 export const getScribbles = () => (dispatch) => {
@@ -20,6 +20,23 @@ export const getScribbles = () => (dispatch) => {
         })
 }
 
+export const getScribble = (scribbleId) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+    axios.get(`/scribble/${scribbleId}`)
+        .then(res => {
+            dispatch({
+                type: SET_SCRIBBLE,
+                payload: res.data
+            });
+            dispatch({
+                type: STOP_LOADING_UI
+            })
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
+
 export const postScribble = (newScribble) => (dispatch) => {
     // console.log("Button has been pressed...")
     // console.log(newScribble);
@@ -29,10 +46,24 @@ export const postScribble = (newScribble) => (dispatch) => {
             // console.log("trying to post the scribble")
             dispatch({ type: POST_SCRIBBLE, payload: res.data });
             dispatch({ type: CLEAR_ERRORS });
+
+            axios.get("/scribbles")
+                .then(res => {
+                    dispatch({
+                        type: SET_SCRIBBLES,
+                        payload: res.data
+                    })
+                })
+                .catch(err => {
+                    dispatch({
+                        type: SET_SCRIBBLES,
+                        payload: []
+                    })
+                })
         })
         .catch(err => {
             console.log("Something went wrong - there is an error")
-            dispatch({ type: SET_ERRORS, payload: err.response.data });
+            dispatch({ type: SET_SCRIBBLES, payload: [] });
         })
 }
 
