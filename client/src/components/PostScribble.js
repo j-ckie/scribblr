@@ -21,7 +21,9 @@ import { postScribble } from "../redux/actions/dataActions";
 const styles = (theme) => ({
     ...theme.spreadThis,
     submitButton: {
-        position: "relative"
+        position: "relative",
+        marginTop: 15,
+        marginBottom: 15
     },
     progressSpinner: {
         position: "absolute"
@@ -32,7 +34,7 @@ const styles = (theme) => ({
 class PostScribble extends Component {
     state = {
         open: false,
-        body: "",
+        scribble: "",
         errors: {}
     }
 
@@ -41,6 +43,11 @@ class PostScribble extends Component {
             this.setState({
                 errors: nextProps.UI.errors
             })
+        }
+        if (!nextProps.UI.errors && !nextProps.UI.loading) {
+            this.setState({ scribble: "", });
+            this.handleClose()
+
         }
     }
 
@@ -52,7 +59,7 @@ class PostScribble extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        this.props.postScribble({ body: this.state.body })
+        this.props.postScribble({ body: this.state.scribble })
     }
 
     handleOpen = () => {
@@ -63,13 +70,16 @@ class PostScribble extends Component {
 
     handleClose = () => {
         this.setState({
-            open: false
+            open: false,
+            errors: {}
         })
     }
 
     render() {
         const { errors } = this.state;
         const { classes, UI: { loading } } = this.props;
+        // console.log(this)
+        // console.log(this.props)
 
         return (
             <Fragment>
@@ -99,12 +109,13 @@ class PostScribble extends Component {
                                 label="Scribble something down"
                                 multiline
                                 rows="3"
-                                placeholder="Scribble something down"
-                                errors={errors.body ? true : false}
+                                placeholder="..."
+                                errors={errors.body}
                                 helperText={errors.body}
                                 className={classes.textField}
                                 value={this.state.scribble}
                                 onChange={this.handleChange}
+                                // userHandle={handle}
                                 fullWidth />
                             <Button type="submit" variant="contained" color="primary" className={classes.submitButton} disabled={loading}>
                                 Submit {loading && (

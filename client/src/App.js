@@ -29,7 +29,7 @@ const theme = createMuiTheme(themeFile);
 
 // ======= AXIOS DEFAULT URL =======
 axios.defaults.baseURL =
-    'https://us-central1-scribblr-a0ed9.cloudfunctions.net/api';
+    'https://cors-anywhere.herokuapp.com/https://us-central1-scribblr-a0ed9.cloudfunctions.net/api';
 
 // ======= validate token =======
 const token = localStorage.fireBaseIDToken;

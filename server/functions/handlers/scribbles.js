@@ -29,9 +29,11 @@ exports.postOneScribble = (req, res) => {
         return res.status(400).json({ error: "Method not allowed!" })
     }
 
+    // console.log(req.user)
+
     let newScribble = {
         body: req.body.body,
-        userHandle: req.body.userHandle,
+        userHandle: req.user.handle,
         userImage: req.user.imageUrl,
         createdAt: new Date().toISOString(),
         likeCount: 0,

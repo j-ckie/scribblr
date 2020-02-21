@@ -1,5 +1,5 @@
 // import { SET_SCRIBBLES, LOADING_DATA, LIKE_SCRIBBLE, UNLIKE_SCRIBBLE, DELETE_SCRIBBLE } from "../types";
-import { SET_SCRIBBLES, LOADING_DATA, LIKE_SCRIBBLE, DELETE_SCRIBBLE, LOADING_UI, SET_ERRORS, CLEAR_ERRORS, POST_SCRIBBLE } from "../types";
+import { SET_SCRIBBLES, LOADING_DATA, LIKE_SCRIBBLE, DELETE_SCRIBBLE, LOADING_UI, SET_ERRORS, CLEAR_ERRORS, POST_SCRIBBLE, SET_USER } from "../types";
 import axios from "axios";
 
 export const getScribbles = () => (dispatch) => {
@@ -21,12 +21,12 @@ export const getScribbles = () => (dispatch) => {
 }
 
 export const postScribble = (newScribble) => (dispatch) => {
-    console.log("Button has been pressed...")
+    // console.log("Button has been pressed...")
+    // console.log(newScribble);
     dispatch({ type: LOADING_UI })
-    
     axios.post("/scribble", newScribble)
         .then(res => {
-            console.log("trying to post the scribble")
+            // console.log("trying to post the scribble")
             dispatch({ type: POST_SCRIBBLE, payload: res.data });
             dispatch({ type: CLEAR_ERRORS });
         })
