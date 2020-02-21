@@ -44,7 +44,10 @@ exports.postOneScribble = (req, res) => {
             let resScribble = newScribble; // RESponse scribble
             resScribble.scribbleId = doc.id;
             res.json({ resScribble })
-        }).catch(err => console.error(err));
+        }).catch(err => {
+            console.error(err)
+            res.status(500).json({ error: `Something went wrong when adding the scribble` })
+        });
 };
 
 // ======= get one specific scribble =======

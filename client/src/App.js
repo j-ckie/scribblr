@@ -27,9 +27,13 @@ import axios from 'axios';
 // ======= use theme file =======
 const theme = createMuiTheme(themeFile);
 
-// ======= validate token =======
+// ======= AXIOS DEFAULT URL =======
+axios.defaults.baseURL =
+    'https://us-central1-scribblr-a0ed9.cloudfunctions.net/api';
 
+// ======= validate token =======
 const token = localStorage.fireBaseIDToken;
+
 if (token) {
     const decodedToken = jwtDecode(token);
     // console.log(decodedToken);

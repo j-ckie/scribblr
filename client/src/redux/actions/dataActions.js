@@ -1,9 +1,9 @@
 // import { SET_SCRIBBLES, LOADING_DATA, LIKE_SCRIBBLE, UNLIKE_SCRIBBLE, DELETE_SCRIBBLE } from "../types";
-import { SET_SCRIBBLES, LOADING_DATA, LIKE_SCRIBBLE, DELETE_SCRIBBLE } from "../types";
+import { SET_SCRIBBLES, LOADING_DATA, LIKE_SCRIBBLE, DELETE_SCRIBBLE, LOADING_UI, SET_ERRORS, CLEAR_ERRORS, POST_SCRIBBLE } from "../types";
 import axios from "axios";
 
 export const getScribbles = () => (dispatch) => {
-    console.log('getscribbles function')
+    // console.log('getscribbles function')
     dispatch({ type: LOADING_DATA })
     axios.get("/scribbles")
         .then(res => {
@@ -20,18 +20,27 @@ export const getScribbles = () => (dispatch) => {
         })
 }
 
-export const foo = () => {
-    console.log("foo")
+export const postScribble = (newScribble) => (dispatch) => {
+    console.log("Button has been pressed...")
+    dispatch({ type: LOADING_UI })
+    
+    axios.post("/scribble", newScribble)
+        .then(res => {
+            console.log("trying to post the scribble")
+            dispatch({ type: POST_SCRIBBLE, payload: res.data });
+            dispatch({ type: CLEAR_ERRORS });
+        })
+        .catch(err => {
+            console.log("Something went wrong - there is an error")
+            dispatch({ type: SET_ERRORS, payload: err.response.data });
+        })
 }
 
-
 export const likeScribble = (scribbleId) => (dispatch) => {
-    console.log("trying to like the scribble...")
+    // console.log("trying to like the scribble...")
     axios.get(`/scribble/${scribbleId}/like`)
         .then(res => {
             dispatch({ type: LIKE_SCRIBBLE, payload: res.data })
-
-            foo();
 
             axios.get("/scribbles")
                 .then(res => {

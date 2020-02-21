@@ -1,4 +1,4 @@
-import { SET_SCRIBBLES, LIKE_SCRIBBLE, UNLIKE_SCRIBBLE, LOADING_DATA, DELETE_SCRIBBLE } from "../types";
+import { SET_SCRIBBLES, LIKE_SCRIBBLE, LOADING_DATA, DELETE_SCRIBBLE, POST_SCRIBBLE } from "../types"; //UNLIKE_SCRIBBLE,
 
 const initialState = {
     scribbles: [],
@@ -27,14 +27,22 @@ export default function (state = initialState, action) {
 
             return {
                 ...state,
-                scribble: action.payload, // delete this if it doesn/t work
-                loading: false //same here
+                scribble: action.payload,
+                loading: false
             }
         case DELETE_SCRIBBLE:
             let delIndex = state.scribbles.findIndex(scribble => scribble.scribbleId === action.payload)
             state.scribbles.splice(delIndex, 1);
             return {
                 ...state
+            }
+        case POST_SCRIBBLE:
+            return {
+                ...state,
+                scribbles: [
+                    action.payload,
+                    ...state.scribbles
+                ]
             }
         default:
             return state;
