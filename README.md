@@ -9,4 +9,4 @@ Description: Twitter clone created with React, Redux, Firebase, Cloud Firestore,
 
 
 Demo of app:
-<iframe width="560" height="315" src="https://www.youtube.com/embed/TZ1j_624Tmw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![Audi R8](http://img.youtube.com/vi/TZ1j_624Tmw/0.jpg)](https://www.youtube.com/watch?v=TZ1j_624Tmw "Audi R8")
