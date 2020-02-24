@@ -119,13 +119,13 @@ class ScribbleDialog extends Component {
                     onClose={this.handleClose}
                     fullWidth maxWidth="md" className="">
                     <div className="dialog-container-scribble">
-                        <AppBar className={classes.scribbleDialogNav}>
+                        {/* <AppBar className={classes.scribbleDialogNav}>
                             <Toolbar>
                                 <IconButton edge="end" color="inherit" onClick={this.handleClose} aria-label="close">
                                     <CloseIcon />
                                 </IconButton>
                             </Toolbar>
-                        </AppBar>
+                        </AppBar> */}
                         <DialogContent className={classes.dialogContent}>
                             {dialogMarkup}
                         </DialogContent>
