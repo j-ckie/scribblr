@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import MyButton from "../util/MyButton";
-import PostScribble from "./PostScribble";
+import MyButton from "../../util/MyButton";
+import PostScribble from "../scribble/PostScribble";
 
 // ======= Material UI =======
 import AppBar from "@material-ui/core/AppBar";
@@ -28,7 +28,7 @@ export class Navbar extends Component {
                                     <HomeIcon />
                                 </MyButton>
                             </Link>
-                            <MyButton tip="Notifications">
+                            <MyButton tip="Notifications - Under Construction">
                                 <Notifications />
                             </MyButton>
                         </Fragment>

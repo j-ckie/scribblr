@@ -21,7 +21,7 @@ import ChatBubble from "@material-ui/icons/ChatBubble";
 import { connect } from "react-redux";
 
 // import { likeScribble, unlikeScribble } from "../redux/actions/dataActions";
-import MyButton from "../util/MyButton";
+import MyButton from "../../util/MyButton";
 
 const styles = {
     card: {

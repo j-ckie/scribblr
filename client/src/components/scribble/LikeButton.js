@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MyButton from "../util/MyButton";
+import MyButton from "../../util/MyButton";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -8,7 +8,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import withStyles from "@material-ui/core/styles/withStyles";
 
 import { connect } from "react-redux";
-import { likeScribble } from "../redux/actions/dataActions";
+import { likeScribble } from "../../redux/actions/dataActions";
 
 const styles = (theme) => ({
     ...theme.spreadThis,

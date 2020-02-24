@@ -6,8 +6,8 @@ import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 
 // ======= Components =======
-import Scribble from "../components/Scribble"
-import Profile from "../components/Profile"
+import Scribble from "../components/scribble/Scribble"
+import Profile from "../components/profile/Profile"
 
 
 // ======= redux =======

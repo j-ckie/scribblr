@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from "prop-types";
-import MyButton from "../util/MyButton";
+import MyButton from "../../util/MyButton";
 
 // ======= Material UI =======
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -15,7 +15,7 @@ import CloseIcon from "@material-ui/icons/Close";
 
 // ======= Redux =======
 import { connect } from "react-redux";
-import { postScribble } from "../redux/actions/dataActions";
+import { postScribble } from "../../redux/actions/dataActions";
 
 const styles = (theme) => ({
     ...theme.spreadThis,
@@ -76,7 +76,7 @@ class PostScribble extends Component {
     }
 
     render() {
-        const { errors } = this.state;
+        // const { errors } = this.state;
         const { classes, UI: { loading } } = this.props;
         // console.log(this)
         // console.log(this.props)
