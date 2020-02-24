@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 // import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import MyButton from "../util/MyButton";
+import MyButton from "../../util/MyButton";
 
 // material ui
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -13,7 +13,7 @@ import DeleteOutline from "@material-ui/icons/DeleteOutline";
 
 // redux
 import { connect } from "react-redux";
-import { deleteScribble } from "../redux/actions/dataActions"
+import { deleteScribble } from "../../redux/actions/dataActions"
 
 const styles = {
 

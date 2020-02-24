@@ -15,15 +15,17 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 
 // ======= Components =======
-import Navbar from "./components/Navbar";
+import Navbar from "./components/layout/Navbar";
 import AuthRoute from "./util/AuthRoute"
 
 // ======= pages =======
 import home from "./pages/home";
 import login from "./pages/login";
 import signup from "./pages/signup";
-import axios from 'axios';
+import user from "./pages/user";
 
+
+import axios from 'axios';
 // ======= use theme file =======
 const theme = createMuiTheme(themeFile);
 
@@ -61,6 +63,7 @@ function App() {
                             <Route exact path="/" component={home} />
                             <AuthRoute exact path="/login" component={login} />
                             <AuthRoute exact path="/signup" component={signup} />
+                            <Route exact path="/users/:handle" component={user} />
                         </Switch>
                     </div>
                 </BrowserRouter>
